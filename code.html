@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Navkis College of Engineering, Hassan - Biometric Attendance Dashboard</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "primary-container": "#131b2e",
+            "on-surface": "#191c1e",
+            "surface-container-lowest": "#ffffff",
+            "tertiary-container": "#001d31",
+            "surface-bright": "#f7f9fb",
+            "on-secondary-container": "#1d3989",
+            "outline-variant": "#c6c6cd",
+            "background": "#f7f9fb",
+            "tertiary-fixed": "#cce5ff",
+            "primary-fixed-dim": "#bec6e0",
+            "surface-container-low": "#f2f4f6",
+            "surface-container-high": "#e6e8ea",
+            "outline": "#76777d",
+            "on-primary-container": "#7c839b",
+            "tertiary-fixed-dim": "#93ccff",
+            "surface-dim": "#d8dadc",
+            "error-container": "#ffdad6",
+            "primary": "#000000",
+            "surface-tint": "#565e74",
+            "surface": "#f7f9fb",
+            "on-tertiary-container": "#188ace",
+            "secondary-container": "#8fa7fe",
+            "on-secondary-fixed": "#00164e",
+            "on-secondary-fixed-variant": "#264191",
+            "inverse-primary": "#bec6e0",
+            "on-tertiary-fixed": "#001d31",
+            "on-tertiary-fixed-variant": "#004b73",
+            "error": "#ba1a1a",
+            "on-secondary": "#ffffff",
+            "on-error-container": "#93000a",
+            "on-background": "#191c1e",
+            "inverse-on-surface": "#eff1f3",
+            "primary-fixed": "#dae2fd",
+            "surface-variant": "#e0e3e5",
+            "on-primary-fixed": "#131b2e",
+            "inverse-surface": "#2d3133",
+            "on-primary-fixed-variant": "#3f465c",
+            "surface-container-highest": "#e0e3e5",
+            "on-primary": "#ffffff",
+            "on-error": "#ffffff",
+            "on-surface-variant": "#45464d",
+            "secondary-fixed-dim": "#b6c4ff",
+            "secondary": "#4059aa",
+            "tertiary": "#000000",
+            "surface-container": "#eceef0",
+            "secondary-fixed": "#dce1ff",
+            "on-tertiary": "#ffffff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-md": "1rem",
+            "gutter": "1.5rem",
+            "space-xs": "0.25rem",
+            "margin": "2rem",
+            "space-sm": "0.5rem",
+            "space-lg": "1.5rem",
+            "space-xl": "2.5rem"
+          },
+          "fontFamily": {
+            "label-sm": ["Inter"],
+            "headline-xl": ["Inter"],
+            "headline-lg": ["Inter"],
+            "headline-md": ["Inter"],
+            "body-lg": ["Inter"],
+            "body-md": ["Inter"],
+            "body-sm": ["Inter"],
+            "label-md": ["Inter"],
+            "headline-sm": ["Inter"]
+          },
+          "fontSize": {
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+            "headline-xl": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+            "headline-sm": ["16px", { "lineHeight": "24px", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f7f9fb;
+      color: #191c1e;
+    }
+  </style>
+</head>
+
+<body
+  class="h-full flex flex-col bg-background text-on-surface antialiased selection:bg-secondary-container selection:text-on-secondary-container">
+  <!-- TopAppBar -->
+  <header class="bg-surface dark:bg-inverse-surface shadow-sm sticky top-0 z-50">
+    <div class="flex justify-between items-center w-full px-8 h-16 max-w-7xl mx-auto">
+      <div class="flex items-center space-x-3">
+        <div
+          class="w-10 h-10 rounded-xl bg-primary text-on-primary flex items-center justify-center font-bold text-headline-sm shadow-sm">
+          NC
+        </div>
+        <div>
+          <h1 class="text-headline-sm font-headline-sm font-bold text-primary dark:text-inverse-primary tracking-tight">
+            Navkis College of Engineering</h1>
+          <p class="text-label-sm text-on-surface-variant">Biometric Attendance & HR Analytics Portal</p>
+        </div>
+      </div>
+      <nav class="hidden md:flex items-center space-x-8">
+        <button
+          class="text-primary font-semibold border-b-2 border-primary pb-1 transition-colors text-body-md flex items-center gap-1.5"
+          id="nav-upload" onclick="switchTab('upload')">
+          <span class="material-symbols-outlined" style="font-size: 18px;">cloud_upload</span>Upload Report
+        </button>
+        <button
+          class="text-on-surface-variant hover:text-on-surface transition-colors text-body-md flex items-center gap-1.5"
+          id="nav-dashboard" onclick="switchTab('dashboard')">
+          <span class="material-symbols-outlined" style="font-size: 18px;">dashboard</span>Attendance Dashboard
+        </button>
+        <button
+          class="text-on-surface-variant hover:text-on-surface transition-colors text-body-md flex items-center gap-1.5"
+          id="nav-analytics" onclick="switchTab('analytics')">
+          <span class="material-symbols-outlined" style="font-size: 18px;">analytics</span>Analytics
+        </button>
+        <button
+          class="text-on-surface-variant hover:text-on-surface transition-colors text-body-md flex items-center gap-1.5"
+          id="nav-api" onclick="switchTab('api')">
+          <span class="material-symbols-outlined" style="font-size: 18px;">api</span>API Handoff
+        </button>
+      </nav>
+      <div class="flex items-center space-x-4">
+        <div
+          class="hidden sm:flex items-center space-x-2 bg-surface-container-low px-3 py-1.5 rounded-full border border-outline-variant">
+          <span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
+          <span class="text-label-md text-on-surface font-medium">Biometric Sync: Active</span>
+        </div>
+        <button
+          class="flex items-center gap-1.5 text-body-md font-medium text-error hover:bg-error-container/30 px-3 py-1.5 rounded-lg transition-colors"
+          onclick="alert('Logged out successfully.')">
+          <span class="material-symbols-outlined" style="font-size: 18px;">logout</span>Logout
+        </button>
+      </div>
+    </div>
+  </header>
+  <!-- Main Content Canvas -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- VIEW 1: UPLOAD & WELCOME -->
+    <section class="space-y-8 animate-fadeIn" id="view-upload">
+      <div class="text-center max-w-2xl mx-auto space-y-3">
+        <span
+          class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-label-md font-semibold bg-secondary-fixed text-on-secondary-fixed">
+          <span class="material-symbols-outlined" style="font-size: 16px;">verified</span> Institutional Biometric
+          Engine v4.2
+        </span>
+        <h2 class="text-headline-xl text-on-background">Attendance Report Ingestion</h2>
+        <p class="text-body-lg text-on-surface-variant">
+          Upload biometric machine log exports (.pdf, .xls, .xlsx) to instantly calculate attendance metrics, late
+          entries, and generate verified institutional reports.
+        </p>
+      </div>
+      <!-- Upload Card -->
+      <div
+        class="max-w-2xl mx-auto bg-surface-container-lowest border border-outline-variant rounded-xl p-8 shadow-sm space-y-6">
+        <div
+          class="border-2 border-dashed border-outline-variant hover:border-primary rounded-xl p-10 text-center cursor-pointer transition-all bg-surface-container-low/50 flex flex-col items-center justify-center space-y-4"
+          id="drop-zone">
+          <div class="w-16 h-16 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed">
+            <span class="material-symbols-outlined" style="font-size: 32px;">upload_file</span>
+          </div>
+          <div class="space-y-1">
+            <p class="text-body-lg font-semibold text-on-background">Drag & drop your attendance file here</p>
+            <p class="text-body-sm text-on-surface-variant">Supports PDF, XLS, XLSX up to 50MB</p>
+          </div>
+          <label
+            class="inline-flex items-center px-4 py-2 rounded-lg bg-primary text-on-primary text-body-md font-medium hover:opacity-90 cursor-pointer shadow-sm">
+            <span>Browse Files</span>
+            <input accept=".pdf,.xls,.xlsx" class="hidden" id="file-input" onchange="handleFileSelect(event)"
+              type="file" />
+          </label>
+        </div>
+        <!-- File Details Box (Hidden by default, shown upon selection) -->
+        <div
+          class="hidden border border-outline-variant rounded-lg p-4 bg-surface-container-low flex items-center justify-between"
+          id="file-details-container">
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center">
+              <span class="material-symbols-outlined">description</span>
+            </div>
+            <div>
+              <p class="text-body-md font-semibold text-on-background" id="file-name">
+                Daily_Attendance_Report_01-10-2026.pdf</p>
+              <p class="text-body-sm text-on-surface-variant" id="file-meta">PDF Document • 1.2 MB • Ready for parsing
+              </p>
+            </div>
+          </div>
+          <button class="text-on-surface-variant hover:text-error p-2 rounded-lg transition-colors"
+            onclick="removeFile()" title="Remove file">
+            <span class="material-symbols-outlined">delete</span>
+          </button>
+        </div>
+        <!-- Action Buttons -->
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-outline-variant">
+          <button
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-outline-variant text-on-surface text-body-md font-medium hover:bg-surface-container transition-colors"
+            onclick="loadSampleReport()">
+            <span class="material-symbols-outlined" style="font-size: 18px;">bolt</span>
+            Load Sample Report (216 Records)
+          </button>
+          <button
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg bg-primary text-on-primary text-body-md font-medium opacity-50 cursor-not-allowed transition-all shadow-sm"
+            disabled="" id="generate-btn" onclick="startProcessing()">
+            <span>Generate Dashboard</span>
+            <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
+          </button>
+        </div>
+      </div>
+      <!-- Processing State Overlay Modal -->
+      <div class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4"
+        id="processing-modal">
+        <div
+          class="bg-surface-container-lowest border border-outline-variant rounded-xl p-8 max-w-md w-full text-center space-y-6 shadow-xl animate-scaleUp">
+          <div
+            class="w-20 h-20 mx-auto rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed animate-spin">
+            <span class="material-symbols-outlined" style="font-size: 40px;">sync</span>
+          </div>
+          <div class="space-y-2">
+            <h3 class="text-headline-md text-on-background">Parsing Biometric Logs</h3>
+            <p class="text-body-md text-on-surface-variant" id="progress-text">Extracting punch records and verifying
+              employee shifts...</p>
+          </div>
+          <div class="w-full bg-surface-container-high rounded-full h-2.5 overflow-hidden">
+            <div class="bg-primary h-2.5 rounded-full transition-all duration-300" id="progress-bar" style="width: 0%">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- VIEW 2: BIOMETRIC ATTENDANCE DASHBOARD -->
+    <section class="hidden space-y-8" id="view-dashboard">
+      <!-- Metadata Header Bar -->
+      <div
+        class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div class="space-y-1">
+          <div class="flex items-center gap-2">
+            <span
+              class="px-2.5 py-0.5 rounded text-label-sm font-semibold bg-tertiary-fixed text-on-tertiary-fixed">Verified
+              Report</span>
+            <span class="text-body-sm text-on-surface-variant">Report ID: NC-BIO-2026-1001</span>
+          </div>
+          <h2 class="text-headline-lg font-bold text-on-background">Daily Attendance Report</h2>
+          <p class="text-body-md text-on-surface-variant">Attendance Date: <span
+              class="font-semibold text-on-background">01 October 2026</span> • Total Employees Registered: <span
+              class="font-semibold text-on-background">216</span></p>
+        </div>
+        <div class="flex items-center gap-3">
+          <button
+            class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-outline-variant text-on-surface text-body-md font-medium hover:bg-surface-container transition-colors"
+            onclick="switchTab('upload')">
+            <span class="material-symbols-outlined" style="font-size: 18px;">upload_file</span>
+            Upload New File
+          </button>
+          <button
+            class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary text-on-primary text-body-md font-medium hover:opacity-90 transition-colors shadow-sm"
+            onclick="window.print()">
+            <span class="material-symbols-outlined" style="font-size: 18px;">download</span>
+            Export PDF Report
+          </button>
+        </div>
+      </div>
+      <!-- Seven Major KPI Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Presentees -->
+        <div
+          class="bg-surface-container-lowest border border-outline-variant rounded-xl p-5 shadow-sm cursor-pointer hover:border-primary transition-all"
+          onclick="filterTable('Present')">
+          <div class="flex items-center justify-between">
+            <span class="text-body-sm font-medium text-on-surface-variant">Presentees</span>
+            <span class="p-2 rounded-lg bg-emerald-50 text-emerald-700"><span
+                class="material-symbols-outlined">how_to_reg</span></span>
+          </div>
+          <div class="mt-4 flex items-baseline justify-between">
+            <h3 class="text-headline-lg font-bold text-on-background">204</h3>
+            <span class="text-label-sm font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">94.44%
+              Rate</span>
+          </div>
+          <p class="mt-1 text-body-sm text-on-surface-variant">On-time & verified punch-ins</p>
+        </div>
+        <!-- Absentees -->
+        <div
+          class="bg-surface-container-lowest border border-outline-variant rounded-xl p-5 shadow-sm cursor-pointer hover:border-primary transition-all"
+          onclick="filterTable('Absent')">
+          <div class="flex items-center justify-between">
+            <span class="text-body-sm font-medium text-on-surface-variant">Absentees</span>
+            <span class="p-2 rounded-lg bg-rose-50 text-rose-700"><span
+                class="material-symbols-outlined">person_off</span></span>
+          </div>
+          <div class="mt-4 flex items-baseline justify-between">
+            <h3 class="text-headline-lg font-bold text-on-background">12</h3>
+            <span class="text-label-sm font-semibold text-rose-700 bg-rose-50 px-2 py-0.5 rounded">5.56% Rate</span>
+          </div>
+          <p class="mt-1 text-body-sm text-on-surface-variant">Unexcused & leave absences</p>
+        </div>
+        <!-- Attendance % -->
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-5 shadow-sm">
+          <div class="flex items-center justify-between">
+            <span class="text-body-sm font-medium text-on-surface-variant">Attendance %</span>
+            <span class="p-2 rounded-lg bg-blue-50 text-blue-700"><span
+                class="material-symbols-outlined">pie_chart</span></span>
+          </div>
+          <div class="mt-4 flex items-baseline justify-between">
+            <h3 class="text-headline-lg font-bold text-on-background">94.44%</h3>
+            <span class="text-label-sm font-semibold text-blue-700 bg-blue-50 px-2 py-0.5 rounded">+1.2% vs avg</span>
+          </div>
+          <p class="mt-1 text-body-sm text-on-surface-variant">Institutional benchmark</p>
+        </div>
+        <!-- Late Logins -->
+        <div
+          class="bg-surface-container-lowest border border-outline-variant rounded-xl p-5 shadow-sm cursor-pointer hover:border-primary transition-all"
+          onclick="filterTable('Late')">
+          <div class="flex items-center justify-between">
+            <span class="text-body-sm font-medium text-on-surface-variant">Late Logins (>10:00)</span>
+            <span class="p-2 rounded-lg bg-amber-50 text-amber-700"><span
+                class="material-symbols-outlined">schedule</span></span>
+          </div>
+          <div class="mt-4 flex items-baseline justify-between">
+            <h3 class="text-headline-lg font-bold text-on-background">18</h3>
+            <span class="text-label-sm font-semibold text-amber-700 bg-amber-50 px-2 py-0.5 rounded">Warning</span>
+          </div>
+          <p class="mt-1 text-body-sm text-on-surface-variant">Arrived after 10:00 AM threshold</p>
+        </div>
+      </div>
+      <!-- Second Row KPI Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <!-- NC Count -->
+        <div
+          class="bg-surface-container-lowest border border-outline-variant rounded-xl p-5 shadow-sm cursor-pointer hover:border-primary transition-all"
+          onclick="filterTable('NC')">
+          <div class="flex items-center justify-between">
+            <span class="text-body-sm font-medium text-on-surface-variant">NC Count (Non-Compliance)</span>
+            <span class="p-2 rounded-lg bg-purple-50 text-purple-700"><span
+                class="material-symbols-outlined">warning</span></span>
+          </div>
+          <div class="mt-4 flex items-baseline justify-between">
+            <h3 class="text-headline-lg font-bold text-on-background">8</h3>
+            <span class="text-label-sm font-semibold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">Action
+              Req.</span>
+          </div>
+          <p class="mt-1 text-body-sm text-on-surface-variant">Missing punch / punch anomaly</p>
+        </div>
+        <!-- NC % -->
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-5 shadow-sm">
+          <div class="flex items-center justify-between">
+            <span class="text-body-sm font-medium text-on-surface-variant">NC Percentage</span>
+            <span class="p-2 rounded-lg bg-purple-50 text-purple-700"><span
+                class="material-symbols-outlined">analytics</span></span>
+          </div>
+          <div class="mt-4 flex items-baseline justify-between">
+            <h3 class="text-headline-lg font-bold text-on-background">3.70%</h3>
+            <span class="text-label-sm font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">Within
+              limit</span>
+          </div>
+          <p class="mt-1 text-body-sm text-on-surface-variant">Ratio of non-compliant logs</p>
+        </div>
+        <!-- Early Out Count -->
+        <div
+          class="bg-surface-container-lowest border border-outline-variant rounded-xl p-5 shadow-sm cursor-pointer hover:border-primary transition-all"
+          onclick="filterTable('Early Out')">
+          <div class="flex items-center justify-between">
+            <span class="text-body-sm font-medium text-on-surface-variant">Early Out Count (<7:00 hrs)</span>
+                <span class="p-2 rounded-lg bg-amber-50 text-amber-700"><span
+                    class="material-symbols-outlined">alarm_off</span></span>
+          </div>
+          <div class="mt-4 flex items-baseline justify-between">
+            <h3 class="text-headline-lg font-bold text-on-background">14</h3>
+            <span class="text-label-sm font-semibold text-amber-700 bg-amber-50 px-2 py-0.5 rounded">Excl.
+              Absents</span>
+          </div>
+          <p class="mt-1 text-body-sm text-on-surface-variant">Exiting before shift completion</p>
+        </div>
+      </div>
+      <!-- Visual Charts Section (Bento Grid) -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Attendance Overview Donut Chart Card -->
+        <div
+          class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm flex flex-col justify-between">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-headline-sm font-semibold text-on-background">Attendance Overview</h3>
+            <span class="text-body-sm text-on-surface-variant">Present vs Absent</span>
+          </div>
+          <div class="flex items-center justify-center my-6">
+            <!-- SVG Donut Chart -->
+            <div class="relative w-48 h-48 flex items-center justify-center">
+              <svg class="w-full h-full transform -rotate-90" viewbox="0 0 36 36">
+                <path class="text-surface-container-high"
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none"
+                  stroke="currentColor" stroke-width="4"></path>
+                <path class="text-primary"
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none"
+                  stroke="currentColor" stroke-dasharray="94.44, 100" stroke-linecap="round" stroke-width="4"></path>
+              </svg>
+              <div class="absolute text-center">
+                <span class="text-headline-lg font-bold text-on-background">94.4%</span>
+                <span class="block text-label-sm text-on-surface-variant">Present Rate</span>
+              </div>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4 pt-4 border-t border-outline-variant text-center">
+            <div>
+              <span class="block text-body-sm text-on-surface-variant">Presentees</span>
+              <span class="text-headline-md font-bold text-emerald-700">204</span>
+            </div>
+            <div>
+              <span class="block text-body-sm text-on-surface-variant">Absentees</span>
+              <span class="text-headline-md font-bold text-rose-700">12</span>
+            </div>
+          </div>
+        </div>
+        <!-- End-of-Day Activity Bar Chart Card -->
+        <div
+          class="lg:col-span-2 bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm flex flex-col justify-between">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-headline-sm font-semibold text-on-background">Hourly In-Punch Distribution</h3>
+            <span class="text-body-sm text-on-surface-variant">Peak arrival: 09:00 - 09:30 AM</span>
+          </div>
+          <!-- Simulated Bar Chart -->
+          <div class="h-56 flex items-end justify-between gap-2 pt-6 px-2 border-b border-outline-variant">
+            <div class="w-full flex flex-col items-center gap-2">
+              <span class="text-label-sm font-medium text-on-surface-variant">4</span>
+              <div class="w-full bg-primary-fixed rounded-t h-12"></div>
+              <span class="text-label-sm text-on-surface-variant">08:00</span>
+            </div>
+            <div class="w-full flex flex-col items-center gap-2">
+              <span class="text-label-sm font-medium text-on-surface-variant">28</span>
+              <div class="w-full bg-primary rounded-t h-32"></div>
+              <span class="text-label-sm text-on-surface-variant">08:30</span>
+            </div>
+            <div class="w-full flex flex-col items-center gap-2">
+              <span class="text-label-sm font-medium text-on-surface-variant">112</span>
+              <div class="w-full bg-primary rounded-t h-52"></div>
+              <span class="text-label-sm text-on-surface-variant">09:00</span>
+            </div>
+            <div class="w-full flex flex-col items-center gap-2">
+              <span class="text-label-sm font-medium text-on-surface-variant">42</span>
+              <div class="w-full bg-primary rounded-t h-40"></div>
+              <span class="text-label-sm text-on-surface-variant">09:30</span>
+            </div>
+            <div class="w-full flex flex-col items-center gap-2">
+              <span class="text-label-sm font-medium text-on-surface-variant">18</span>
+              <div class="w-full bg-amber-600 rounded-t h-20"></div>
+              <span class="text-label-sm text-on-surface-variant">10:00+</span>
+            </div>
+          </div>
+          <div class="flex items-center justify-between pt-4 text-body-sm text-on-surface-variant">
+            <span>Total Logged In-Time Entries: 204</span>
+            <span class="flex items-center gap-2"><span class="w-3 h-3 rounded bg-amber-600 inline-block"></span> Late
+              Threshold (>10:00 AM)</span>
+          </div>
+        </div>
+      </div>
+      <!-- Employee Category Filter Pills & Search -->
+      <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 shadow-sm space-y-4">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div class="flex flex-wrap items-center gap-2">
+            <button class="px-4 py-2 rounded-lg text-body-md font-semibold bg-primary text-on-primary transition-all"
+              id="pill-All" onclick="filterTable('All')">All Records (216)</button>
+            <button
+              class="px-4 py-2 rounded-lg text-body-md font-medium bg-surface-container hover:bg-surface-container-high text-on-surface transition-all"
+              id="pill-Present" onclick="filterTable('Present')">Present (204)</button>
+            <button
+              class="px-4 py-2 rounded-lg text-body-md font-medium bg-surface-container hover:bg-surface-container-high text-on-surface transition-all"
+              id="pill-Absent" onclick="filterTable('Absent')">Absent (12)</button>
+            <button
+              class="px-4 py-2 rounded-lg text-body-md font-medium bg-surface-container hover:bg-surface-container-high text-on-surface transition-all"
+              id="pill-Late" onclick="filterTable('Late')">Late Logins (18)</button>
+            <button
+              class="px-4 py-2 rounded-lg text-body-md font-medium bg-surface-container hover:bg-surface-container-high text-on-surface transition-all"
+              id="pill-NC" onclick="filterTable('NC')">NC Employees (8)</button>
+            <button
+              class="px-4 py-2 rounded-lg text-body-md font-medium bg-surface-container hover:bg-surface-container-high text-on-surface transition-all"
+              id="pill-Early Out" onclick="filterTable('Early Out')">Early Out (14)</button>
+          </div>
+          <div class="relative w-full md:w-72">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-on-surface-variant">
+              <span class="material-symbols-outlined" style="font-size: 18px;">search</span>
+            </span>
+            <input
+              class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-lg text-body-md text-on-surface focus:outline-none focus:border-primary"
+              id="table-search" oninput="handleSearch(this.value)" placeholder="Search by name or code..."
+              type="text" />
+          </div>
+        </div>
+      </div>
+      <!-- Complete Attendance Records Table -->
+      <div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+        <div class="px-6 py-4 border-b border-outline-variant flex items-center justify-between">
+          <h3 class="text-headline-sm font-semibold text-on-background">Complete Attendance Records (216 Employees)</h3>
+          <span class="text-body-sm text-on-surface-variant">Showing filtered results</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr
+                class="bg-surface-container-low text-on-surface-variant text-label-md border-b border-outline-variant">
+                <th class="p-4 font-semibold">S.No</th>
+                <th class="p-4 font-semibold">Emp Code</th>
+                <th class="p-4 font-semibold">Employee Name</th>
+                <th class="p-4 font-semibold">Shift</th>
+                <th class="p-4 font-semibold">In Time</th>
+                <th class="p-4 font-semibold">Out Time</th>
+                <th class="p-4 font-semibold">Work Dur.</th>
+                <th class="p-4 font-semibold">OT</th>
+                <th class="p-4 font-semibold">Tot. Dur.</th>
+                <th class="p-4 font-semibold">Status</th>
+                <th class="p-4 font-semibold">Remarks</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-outline-variant text-body-md text-on-surface" id="attendance-tbody">
+              <!-- Dynamically populated via JS for all 216 records -->
+            </tbody>
+          </table>
+        </div>
+        <!-- Pagination footer -->
+        <div
+          class="px-6 py-4 bg-surface-container-low border-t border-outline-variant flex items-center justify-between text-body-sm text-on-surface-variant">
+          <span>Showing 1 to 15 of 216 entries</span>
+          <div class="flex items-center space-x-2">
+            <button class="px-3 py-1 rounded border border-outline-variant opacity-50 cursor-not-allowed"
+              disabled="">Previous</button>
+            <button class="px-3 py-1 rounded bg-primary text-on-primary font-medium">1</button>
+            <button class="px-3 py-1 rounded border border-outline-variant hover:bg-surface-container">2</button>
+            <button class="px-3 py-1 rounded border border-outline-variant hover:bg-surface-container">3</button>
+            <button class="px-3 py-1 rounded border border-outline-variant hover:bg-surface-container">Next</button>
+          </div>
+        </div>
+      </div>
+      <!-- End-of-Day Summary Table -->
+      <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm space-y-4">
+        <h3 class="text-headline-sm font-semibold text-on-background">End-of-Day Institutional Summary</h3>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div class="bg-surface-container-low p-4 rounded-lg border border-outline-variant">
+            <span class="text-body-sm text-on-surface-variant">Total Registered Faculty & Staff</span>
+            <p class="text-headline-md font-bold text-on-background mt-1">216</p>
+          </div>
+          <div class="bg-surface-container-low p-4 rounded-lg border border-outline-variant">
+            <span class="text-body-sm text-on-surface-variant">Total Present (Verified)</span>
+            <p class="text-headline-md font-bold text-emerald-700 mt-1">204 (94.44%)</p>
+          </div>
+          <div class="bg-surface-container-low p-4 rounded-lg border border-outline-variant">
+            <span class="text-body-sm text-on-surface-variant">Total Absent (Unexcused + Leave)</span>
+            <p class="text-headline-md font-bold text-rose-700 mt-1">12 (5.56%)</p>
+          </div>
+          <div class="bg-surface-container-low p-4 rounded-lg border border-outline-variant">
+            <span class="text-body-sm text-on-surface-variant">Non-Compliance & Late Flagged</span>
+            <p class="text-headline-md font-bold text-amber-700 mt-1">26 Total</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- VIEW 3: ANALYTICS -->
+    <section class="hidden space-y-8" id="view-analytics">
+      <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm space-y-4">
+        <h2 class="text-headline-lg font-bold text-on-background">Institutional Biometric Analytics</h2>
+        <p class="text-body-md text-on-surface-variant">Weekly and monthly aggregate punctuality trends across
+          departments.</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+          <div class="p-5 rounded-xl bg-surface-container-low border border-outline-variant space-y-2">
+            <span class="text-body-sm text-on-surface-variant font-medium">Computer Science Dept.</span>
+            <h3 class="text-headline-md font-bold text-on-background">98.2% Punctuality</h3>
+            <p class="text-body-sm text-emerald-700 font-medium">↑ +2.1% from last week</p>
+          </div>
+          <div class="p-5 rounded-xl bg-surface-container-low border border-outline-variant space-y-2">
+            <span class="text-body-sm text-on-surface-variant font-medium">Mechanical Engineering Dept.</span>
+            <h3 class="text-headline-md font-bold text-on-background">93.5% Punctuality</h3>
+            <p class="text-body-sm text-amber-700 font-medium">→ Stable</p>
+          </div>
+          <div class="p-5 rounded-xl bg-surface-container-low border border-outline-variant space-y-2">
+            <span class="text-body-sm text-on-surface-variant font-medium">Administrative Staff</span>
+            <h3 class="text-headline-md font-bold text-on-background">91.0% Punctuality</h3>
+            <p class="text-body-sm text-rose-700 font-medium">↓ -1.4% from last week</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- VIEW 4: API HANDOFF & DOCUMENTATION -->
+    <section class="hidden space-y-8" id="view-api">
+      <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm space-y-6">
+        <div>
+          <span
+            class="px-2.5 py-0.5 rounded text-label-sm font-semibold bg-primary-fixed text-on-primary-fixed">Antigravity
+            Backend Integration</span>
+          <h2 class="text-headline-lg font-bold text-on-background mt-2">API Handoff & Documentation</h2>
+          <p class="text-body-md text-on-surface-variant">Endpoints and payload structures for automated biometric
+            report synchronization.</p>
+        </div>
+        <div class="space-y-4">
+          <div class="p-4 rounded-lg bg-primary-container text-on-primary-container font-mono text-body-sm">
+            <span class="text-emerald-400 font-bold">POST</span> /api/attendance/upload
+          </div>
+          <div class="space-y-2">
+            <h3 class="text-headline-sm font-semibold text-on-background">Multipart Request Headers</h3>
+            <ul class="list-disc list-inside text-body-md text-on-surface-variant space-y-1">
+              <li><code class="text-on-background font-mono">Authorization: Bearer <token></code></li>
+              <li><code class="text-on-background font-mono">Content-Type: multipart/form-data</code></li>
+            </ul>
+          </div>
+          <div class="space-y-2">
+            <h3 class="text-headline-sm font-semibold text-on-background">Sample JSON Response Structure</h3>
+            <pre
+              class="bg-surface-container-low p-4 rounded-lg border border-outline-variant font-mono text-body-sm text-on-background overflow-x-auto">{
+  "status": "success",
+  "report_id": "NC-BIO-2026-1001",
+  "attendance_date": "2026-10-01",
+  "total_employees": 216,
+  "metrics": {
+    "presentees": 204,
+    "absentees": 12,
+    "attendance_rate": "94.44%",
+    "late_logins": 18,
+    "nc_count": 8,
+    "early_out_count": 14
+  }
+}
+            </pre>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <!-- JavaScript Application Logic -->
+  <script>
+    // Tab Switching Logic
+    function switchTab(tabId) {
+      ['upload', 'dashboard', 'analytics', 'api'].forEach(id => {
+        document.getElementById('view-' + id).classList.add('hidden');
+        const navBtn = document.getElementById('nav-' + id);
+        if (navBtn) {
+          navBtn.className = "text-on-surface-variant hover:text-on-surface transition-colors text-body-md flex items-center gap-1.5";
+        }
+      });
+      document.getElementById('view-' + tabId).classList.remove('hidden');
+      const activeNav = document.getElementById('nav-' + tabId);
+      if (activeNav) {
+        activeNav.className = "text-primary font-semibold border-b-2 border-primary pb-1 transition-colors text-body-md flex items-center gap-1.5";
+      }
+      window.scrollTo(0, 0);
+    }
+
+    // File Handling State
+    function handleFileSelect(event) {
+      const file = event.target.files[0];
+      if (file) {
+        document.getElementById('file-name').innerText = file.name;
+        document.getElementById('file-meta').innerText = `${file.type || 'Document'} • ${(file.size / 1024 / 1024).toFixed(2)} MB • Ready for parsing`;
+        document.getElementById('file-details-container').classList.remove('hidden');
+        const genBtn = document.getElementById('generate-btn');
+        genBtn.disabled = false;
+        genBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+      }
+    }
+
+    function removeFile() {
+      document.getElementById('file-input').value = '';
+      document.getElementById('file-details-container').classList.add('hidden');
+      const genBtn = document.getElementById('generate-btn');
+      genBtn.disabled = true;
+      genBtn.classList.add('opacity-50', 'cursor-not-allowed');
+    }
+
+    function loadSampleReport() {
+      document.getElementById('file-name').innerText = 'Daily Attendance Report 01-10-2026.pdf';
+      document.getElementById('file-meta').innerText = 'PDF Document • 1.4 MB • 216 Records Loaded';
+      document.getElementById('file-details-container').classList.remove('hidden');
+      const genBtn = document.getElementById('generate-btn');
+      genBtn.disabled = false;
+      genBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+      startProcessing();
+    }
+
+    // Processing Simulation
+    function startProcessing() {
+      const modal = document.getElementById('processing-modal');
+      const progressBar = document.getElementById('progress-bar');
+      const progressText = document.getElementById('progress-text');
+      modal.classList.remove('hidden');
+
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += 20;
+        progressBar.style.width = progress + '%';
+        if (progress === 40) progressText.innerText = 'Validating biometric timestamp sequence...';
+        if (progress === 80) progressText.innerText = 'Calculating KPI summaries and late thresholds...';
+        if (progress >= 100) {
+          clearInterval(interval);
+          setTimeout(() => {
+            modal.classList.add('hidden');
+            progressBar.style.width = '0%';
+            switchTab('dashboard');
+            initTableData();
+          }, 400);
+        }
+      }, 300);
+    }
+
+    // Mock Data Generation for 216 Employees
+    let allRecords = [];
+    const firstNames = ['Aarav', 'Ananya', 'Aditya', 'Diya', 'Rohan', 'Priya', 'Kiran', 'Neha', 'Rahul', 'Sneha', 'Vikram', 'Pooja', 'Amit', 'Divya', 'Manish', 'Kavita', 'Suresh', 'Meera', 'Alok', 'Swati'];
+    const lastNames = ['Sharma', 'Verma', 'Gupta', 'Patel', 'Reddy', 'Iyer', 'Nair', 'Kumar', 'Singh', 'Joshi', 'Mehta', 'Rao', 'Deshmukh', 'Choudhury', 'Pillai', 'Menon'];
+
+    for (let i = 1; i <= 216; i++) {
+      const fName = firstNames[(i * 7) % firstNames.length];
+      const lName = lastNames[(i * 13) % lastNames.length];
+      const code = `NCENG${1000 + i}`;
+      let status = 'Present';
+      let inTime = '09:02 AM';
+      let outTime = '05:15 PM';
+      let workDur = '08:13';
+      let ot = '00:13';
+      let totDur = '08:13';
+      let remarks = 'On Time';
+
+      if (i > 204) {
+        status = 'Absent';
+        inTime = '--:--';
+        outTime = '--:--';
+        workDur = '00:00';
+        ot = '00:00';
+        totDur = '00:00';
+        remarks = i % 2 === 0 ? 'Absent (Leave Approved)' : 'Absent (Unexcused)';
+      } else if (i % 12 === 0) {
+        status = 'Late';
+        inTime = '10:22 AM';
+        outTime = '05:00 PM';
+        workDur = '06:38';
+        ot = '00:00';
+        totDur = '06:38';
+        remarks = '22 mins late';
+      } else if (i % 27 === 0) {
+        status = 'NC';
+        inTime = '09:15 AM';
+        outTime = '--:--';
+        workDur = '00:00';
+        ot = '00:00';
+        totDur = '00:00';
+        remarks = 'NC (Missing Out-Punch)';
+      } else if (i % 15 === 0) {
+        status = 'Early Out';
+        inTime = '09:00 AM';
+        outTime = '03:30 PM';
+        workDur = '06:30';
+        ot = '00:00';
+        totDur = '06:30';
+        remarks = 'Early Out (<7 hrs)';
+      }
+
+      allRecords.push({
+        sno: i,
+        code: code,
+        name: `${fName} ${lName}`,
+        shift: 'GS (09:00 - 17:00)',
+        inTime: inTime,
+        outTime: outTime,
+        workDur: workDur,
+        ot: ot,
+        totDur: totDur,
+        status: status,
+        remarks: remarks
+      });
+    }
+
+    let currentFilter = 'All';
+    let searchQuery = '';
+
+    function initTableData() {
+      renderTable(allRecords);
+    }
+
+    function renderTable(records) {
+      const tbody = document.getElementById('attendance-tbody');
+      tbody.innerHTML = '';
+
+      const filtered = records.filter(r => {
+        const matchesSearch = r.name.toLowerCase().includes(searchQuery.toLowerCase()) || r.code.toLowerCase().includes(searchQuery.toLowerCase());
+        if (currentFilter === 'All') return matchesSearch;
+        if (currentFilter === 'Present') return matchesSearch && r.status === 'Present';
+        if (currentFilter === 'Absent') return matchesSearch && r.status === 'Absent';
+        if (currentFilter === 'Late') return matchesSearch && r.status === 'Late';
+        if (currentFilter === 'NC') return matchesSearch && r.status === 'Non compliance';
+        if (currentFilter === 'Early Out') return matchesSearch && r.status === 'Early Out';
+        return matchesSearch;
+      });
+
+      filtered.forEach(r => {
+        let statusBadge = '';
+        if (r.status === 'Present') statusBadge = '<span class="px-2.5 py-1 rounded-full text-label-sm font-semibold bg-emerald-50 text-emerald-700">Present</span>';
+        else if (r.status === 'Absent') statusBadge = '<span class="px-2.5 py-1 rounded-full text-label-sm font-semibold bg-rose-50 text-rose-700">Absent</span>';
+        else if (r.status === 'Late') statusBadge = '<span class="px-2.5 py-1 rounded-full text-label-sm font-semibold bg-amber-50 text-amber-700">Late Login</span>';
+        else if (r.status === 'NC') statusBadge = '<span class="px-2.5 py-1 rounded-full text-label-sm font-semibold bg-purple-50 text-purple-700">NC</span>';
+        else if (r.status === 'Early Out') statusBadge = '<span class="px-2.5 py-1 rounded-full text-label-sm font-semibold bg-amber-50 text-amber-700">Early Out</span>';
+
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-surface-container-low transition-colors border-b border-outline-variant';
+        tr.innerHTML = `
+          <td class="p-4 text-body-sm text-on-surface-variant">${r.sno}</td>
+          <td class="p-4 font-mono text-body-sm text-on-background">${r.code}</td>
+          <td class="p-4 font-medium text-on-background">${r.name}</td>
+          <td class="p-4 text-body-sm text-on-surface-variant">${r.shift}</td>
+          <td class="p-4 font-mono text-body-sm">${r.inTime}</td>
+          <td class="p-4 font-mono text-body-sm">${r.outTime}</td>
+          <td class="p-4 font-mono text-body-sm">${r.workDur}</td>
+          <td class="p-4 font-mono text-body-sm">${r.ot}</td>
+          <td class="p-4 font-mono text-body-sm">${r.totDur}</td>
+          <td class="p-4">${statusBadge}</td>
+          <td class="p-4 text-body-sm text-on-surface-variant">${r.remarks}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function filterTable(filter) {
+      currentFilter = filter;
+      ['All', 'Present', 'Absent', 'Late', 'NC', 'Early Out'].forEach(f => {
+        const btn = document.getElementById('pill-' + f);
+        if (btn) {
+          if (f === filter) {
+            btn.className = 'px-4 py-2 rounded-lg text-body-md font-semibold bg-primary text-on-primary transition-all';
+          } else {
+            btn.className = 'px-4 py-2 rounded-lg text-body-md font-medium bg-surface-container hover:bg-surface-container-high text-on-surface transition-all';
+          }
+        }
+      });
+      renderTable(allRecords);
+    }
+
+    function handleSearch(query) {
+      searchQuery = query;
+      renderTable(allRecords);
+    }
+
+    // Initialize data table on load
+    window.addEventListener('DOMContentLoaded', () => {
+      initTableData();
+    });
+  </script>
+</body>
+
+</html>
